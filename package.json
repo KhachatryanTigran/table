@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@formkit/vue": "^1.1.0-e5c1903",
     "pinia": "^2.1.6",
     "uuid": "^9.0.0",
     "vue": "^3.3.4",

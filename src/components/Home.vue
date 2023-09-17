@@ -16,12 +16,6 @@
       >
         <input type="text" placeholder="Name" v-model="data.name" class="p-2" />
 
-        <input
-          type="number"
-          placeholder="Count of rows"
-          v-model="data.count"
-          class="p-2"
-        />
         <button
           @click="create"
           class="bg-emerald-700 p-4 rounded-md text-white"
@@ -41,13 +35,12 @@ import { v4 as uuid } from "uuid";
 const { createNewTable } = useTableStore();
 const data = ref({
   name: "",
-  count: "",
   id: uuid(),
 });
 function create() {
   createNewTable({
     name: data.value.name,
-    count: data.value.count,
+
     id: data.value.id,
   });
   router.push(`/table/${data.value.id}`);

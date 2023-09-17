@@ -1,28 +1,28 @@
-<template>
-  <div
-    class="bg-slate-50 hover:bg-teal-50 flex-row flex gap-10 border-solid border-teal-600 border-4 m-3 p-3 rounded-md justify-between"
-  >
-    <span>{{ row.name }}</span>
-    <span>{{ row.data }}</span>
-    <span>{{ row.type }}</span>
-    <span>{{ row.nullable }}</span>
-  </div>
-</template>
-
-<script>
-export default {
-  data() {
-    return {
-      disabled: true,
-    };
-  },
-
-  props: {
-    row: Object,
-  },
-
-  methods: {},
+<script setup>
+import { ref } from "vue";
+import test from "./Test.vue";
+const submitted = ref(false);
+const submitHandler = async () => {
+  // Let's pretend this is an ajax request:
+  await new Promise((r) => setTimeout(r, 1000));
+  submitted.value = true;
 };
+const asd = ref([1, 2, 3, 4, 5, 6]);
 </script>
 
-<style lang="scss" scoped></style>
+<template>
+  <FormKit
+    type="form"
+    id="registration-example"
+    :form-class="submitted ? 'hide' : 'show'"
+    submit-label="Register"
+    @submit="submitHandler"
+    :actions="false"
+    #default="{ value }"
+  >
+    <h1>Register!</h1>
+
+    <FormKit type="submit" label="Register" />
+  </FormKit>
+  <div v-if="submitted"></div>
+</template>

@@ -7,25 +7,17 @@ export const useTableStore = defineStore("tableStore", {
       {
         name: "users",
         id: "124",
-
-        rows: [
+        tbData: [
           {
-            name: "name1",
-            data: "data1",
-            type: "Number",
+            name: "name3",
+            data: [],
+            type: "Object",
             nullable: "Yes",
-            id: "1236574",
-          },
-          {
-            name: "name2",
-            data: "data2",
-            type: "Number",
-            nullable: "Yes",
-            id: "123",
+            id: "12355",
           },
           {
             name: "name3",
-            data: "data3",
+            data: [],
             type: "Object",
             nullable: "Yes",
             id: "12355",
@@ -37,95 +29,72 @@ export const useTableStore = defineStore("tableStore", {
   }),
 
   getters: {
-    getData: (state) => state.currentTable,
     getTableByid: (state) => {
       return (id) => state.tables.find((tb) => tb.id === id);
-    },
-
-    getOldData: (state) => {
-      return (index, id) => {
-        const oldData = state.tables.find(
-          (tb) => tb.id === state.currentTable.id
-        ).rows[index];
-        state.currentTable.rows[index] = { ...oldData };
-
-        return state.currentTable.rows[index];
-      };
     },
   },
   actions: {
     setTable(id) {
-      this.currentTable = { ...this.tables.find((tb) => tb.id == id) };
-    },
-    checkInStore(currentRow, index) {
-      const oldData = this.tables.find((tb) => tb.id === this.currentTable.id)
-        .rows[index];
-      const isChanged =
-        oldData.name === currentRow.name &&
-        oldData.data === currentRow.data &&
-        oldData.type === currentRow.type;
-
-      return !isChanged;
-    },
-    createNewTable({ name, id, count }) {
-      const newRow = {
-        name: "",
-        data: "",
-        type: "Boolean",
-        nullable: "Yes",
-        id: id,
+      const asd = this.tables.find((tb) => tb.id == id);
+      console.log(asd, "asd");
+      this.currentTable = {
+        ...asd,
+        tbData: [...asd.tbData],
       };
+    },
 
+    createNewTable({ name, id }) {
       const newTable = {
         name,
         id,
-        rows: [newRow],
+        tbData: [],
       };
       this.tables.push(newTable);
     },
-    restore(index) {
-      const oldData = this.tables.find((tb) => tb.id === this.currentTable.id)
-        .rows[index];
-      this.currentTable.rows[index] = { ...oldData };
-    },
-    addRow(id) {
-      const newRow = {
-        name: "",
-        data: "",
-        type: "Boolean",
-        nullable: "Yes",
-        id: uuid(),
-      };
 
-      this.tables.find((tb) => tb.id === id)?.rows.push(newRow);
+    addHeader() {
+      const newHeader = {
+        name: "",
+        data: [],
+        type: "",
+        nullable: "",
+        id: uuid(),
+        required: {
+          name: true,
+          type: true,
+          nullable: true,
+        },
+      };
+      console.log(this.currentTable);
+      this.currentTable.tbData.push({ ...newHeader });
     },
     update(id) {
       const index = this.tables.findIndex((tb) => tb.id === id);
-      this.tables.splice(index, 1, { ...this.currentTable });
+      this.tables.splice(index, 1, {
+        ...this.currentTable,
+        tbData: [...this.currentTable.tbData],
+      });
+      console.log(this.tables);
     },
     addNext(index) {
-      const newRow = {
-        name: "newAdded",
-        data: "additional",
-        type: "Number",
-        nullable: "Yes",
+      const newHeader = {
+        name: "",
+        data: [],
+        type: "",
+        nullable: "",
         id: uuid(),
+        required: {
+          name: true,
+          type: true,
+          nullable: true,
+        },
       };
-      this.currentTable.rows.splice(index + 1, 0, newRow);
+      this.currentTable.tbData.splice(index + 1, 0, { ...newHeader });
     },
     remove(id) {
-      this.currentTable.rows = this.currentTable.rows.filter(
-        (el) => el.id !== id
-      );
-    },
-    save(data) {
-      this.currentTable.rows = this.currentTable.rows.map((el) => {
-        if (el.id === data.id) {
-          return data;
-        } else {
-          return el;
-        }
-      });
+      const index = this.currentTable.tbData.findIndex((tb) => tb.id === id);
+
+      this.currentTable.tbData.splice(index, 1);
     },
   },
 });
