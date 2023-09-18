@@ -1,34 +1,30 @@
 <template>
   <div class="px-4 sm:px-6 lg:px-8">
-    <div class="mt-8 flow-root">
-      <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-        <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
-          <table class="min-w-full divide-y divide-gray-300">
-            <thead>
-              <tr>
-                <th
-                  v-for="header in table.tbData"
-                  :key="header.id"
-                  class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
-                >
-                  {{ header.name }}
-                </th>
-              </tr>
-            </thead>
-            <tbody class="divide-y divide-gray-200">
-              <tr>
-                <td
-                  class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"
-                  v-for="rowData in table.tbData"
-                  :key="rowData.id"
-                >
-                  <DataRow :rowData="rowData" />
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
+    <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8 flex flex-col">
+      <table class="min-w-fit divide-y divide-gray-300 m-5">
+        <thead class=" ">
+          <tr>
+            <th
+              v-for="header in table.tbData"
+              :key="header.id"
+              class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 min-w-200px"
+            >
+              {{ header.name }}
+            </th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-200">
+          <tr>
+            <td
+              class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 min-w-200px"
+              v-for="rowData in table.tbData"
+              :key="rowData.id"
+            >
+              <DataRow :rowData="rowData" />
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </template>

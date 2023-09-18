@@ -42,8 +42,12 @@
       <div>
         <select v-model="header.nullable">
           <option disabled value="">Is Nullable</option>
-          <option v-for="type in selectNullable" :value="type" :key="type">
-            {{ type }}
+          <option
+            v-for="option in selectNullable"
+            :value="option.value"
+            :key="type"
+          >
+            {{ option.label }}
           </option>
         </select>
         <div v-if="header.required.nullable" class="text-red-600 text-sm">
@@ -98,7 +102,11 @@ const headerData = ref({
 });
 const errMessage = ref("");
 const selectType = ref(["String", "Number"]);
-const selectNullable = ref(["Yes", "No"]);
+const selectNullable = ref([
+  { value: true, label: "Yes" },
+  { value: false, label: "No" },
+]);
+
 function remove(e) {
   e.preventDefault();
   e.stopPropagation();

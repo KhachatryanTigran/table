@@ -56,8 +56,8 @@ export const useTableStore = defineStore("tableStore", {
       const newHeader = {
         name: "",
         data: [],
-        type: "",
-        nullable: "",
+        type: null,
+        nullable: null,
         id: uuid(),
         required: {
           name: true,

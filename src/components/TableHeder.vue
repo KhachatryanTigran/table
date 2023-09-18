@@ -53,7 +53,7 @@ function check(data) {
   data.tbData.map((el) => {
     el.name.trim() ? (el.required.name = false) : (el.required.name = true);
     el.type ? (el.required.type = false) : (el.required.type = true);
-    el.nullable
+    el.nullable !== ""
       ? (el.required.nullable = false)
       : (el.required.nullable = true);
   });
