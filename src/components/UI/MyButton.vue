@@ -9,7 +9,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 const { click } = defineProps(["click"]);
 </script>
 

@@ -1,6 +1,6 @@
 <template>
-  <div class="flex flex-col">
-    <div class="bg-white m-3 p-4 min-w-max">
+  <div class="flex flex-col h-screen">
+    <div class="bg-white m-3 p-4 min-w-max h-screen">
       <div v-for="table in tableStore.tables">
         <TableTemplate :table="table" :key="table.id" />
       </div>
@@ -13,13 +13,10 @@
   </div>
 </template>
 
-<script setup>
-import Home from "./Home.vue";
-import MyTable from "./MyTable.vue";
-import { useRoute } from "vue-router";
-import { ref, onMounted, watch, onUpdated } from "vue";
+<script setup lang="ts">
+import { onMounted, onUpdated } from "vue";
 import { useTableStore } from "../stores/counter";
-import { v4 as uuid } from "uuid";
+
 import TableTemplate from "./TableTemplate.vue";
 
 const tableStore = useTableStore();
@@ -27,8 +24,7 @@ const tableStore = useTableStore();
 onMounted(() => {});
 onUpdated(() => {
   console.log("updated");
-}),
-  watch();
+});
 </script>
 
 <style lang="scss" scoped></style>

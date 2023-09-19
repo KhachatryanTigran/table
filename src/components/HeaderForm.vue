@@ -69,7 +69,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref, onMounted, watch, onUpdated, computed } from "vue";
 import { useTableStore } from "../stores/counter";
 import { v4 as uuid } from "uuid";

@@ -7,7 +7,7 @@
       <HeaderForm
         v-for="(header, index) in table?.tbData"
         :key="header.id"
-        v-bind:header="header"
+        :header="header"
         :index="index"
       />
 
@@ -20,22 +20,24 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { useRoute } from "vue-router";
-import { ref, onMounted, watch, onUpdated } from "vue";
+import { ref, onMounted, watch, onUpdated, Ref } from "vue";
 import { useTableStore } from "../stores/counter";
-import { v4 as uuid } from "uuid";
+
 import MyButton from "./UI/MyButton.vue";
 import HeaderForm from "./HeaderForm.vue";
+
 const route = useRoute();
 
 const { setTable, addHeader, update } = useTableStore();
 const tableStore = useTableStore();
 const tableId = route.params.id;
-const message = ref("");
-const table = ref({});
-function check(data) {
-  data.tbData.map((el) => {
+const message: Ref<string> = ref("");
+const table: Ref<any> = ref({});
+
+function check(data: any) {
+  data.tbData.map((el: any) => {
     el.name.trim() ? (el.required.name = false) : (el.required.name = true);
     el.type ? (el.required.type = false) : (el.required.type = true);
     el.nullable !== null
@@ -43,18 +45,20 @@ function check(data) {
       : (el.required.nullable = true);
   });
 }
+
 function updateTable() {
   const isFilled = tableStore.currentTable.tbData.some(
-    (el) => el.required.name || el.required.type || el.required.nullable
+    (el: any) => el.required.name || el.required.type || el.required.nullable
   );
 
   if (isFilled) {
     message.value = "Sorry, not all fields are filled out correctly.";
   } else {
     message.value = "Updated successfully";
-    update(table.value.id);
+    update();
   }
 }
+
 function addNewHeader() {
   addHeader();
 }
@@ -62,20 +66,22 @@ function addNewHeader() {
 onMounted(() => {
   setTable(tableId);
 });
+
 onUpdated(() => {
   setTimeout(() => {
     message.value = "";
   }, 2000);
-}),
-  watch(
-    () => tableStore.currentTable,
-    (newTable, oldTable) => {
-      table.value = newTable;
-      console.log("type");
-      check(newTable);
-    },
-    { deep: true }
-  );
+});
+
+watch(
+  () => tableStore.currentTable,
+  (newTable) => {
+    table.value = newTable;
+
+    check(newTable);
+  },
+  { deep: true }
+);
 </script>
 
 <style></style>

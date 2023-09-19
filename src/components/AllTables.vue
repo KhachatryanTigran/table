@@ -1,33 +1,29 @@
 <template>
   <div>
     <div class="flex justify-start">
-      <div v-for="table in tableStore.tables">
-        <TableTemplate :table="table" :key="table.id" @getId="getId" />
+      <div v-for="table in tableStore.tables" :key="table.id">
+        <TableTemplate :table="table" />
       </div>
     </div>
     <MyTable v-if="tableId" :id="tableId" />
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import MyTable from "./MyTable.vue";
-import { useRoute } from "vue-router";
-import { ref, onMounted, watch, onUpdated } from "vue";
+
+import { ref, onMounted, onUpdated } from "vue";
 import { useTableStore } from "../stores/counter";
-import { v4 as uuid } from "uuid";
+
 import TableTemplate from "./TableTemplate.vue";
-const tableId = ref("");
+
+const tableId = ref<string>("");
 const tableStore = useTableStore();
 
-function getId(id) {
-  tableId.value = id;
-  console.log(tableId.value);
-}
 onMounted(() => {});
 onUpdated(() => {
   console.log("updated");
-}),
-  watch();
+});
 </script>
 
 <style lang="scss" scoped></style>

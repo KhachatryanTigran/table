@@ -1,81 +1,56 @@
-import { ref, computed } from "vue";
 import { defineStore } from "pinia";
 import { v4 as uuid } from "uuid";
+
+interface Table {
+  name: string;
+  id: string;
+  tbData: Array<TableHeader>;
+  rowsData: any[];
+}
+
+interface TableHeader {
+  name: string;
+  type: string | null;
+  nullable: boolean | null;
+  id: string;
+  required: {
+    name: boolean;
+    type: boolean;
+    nullable: boolean;
+  };
+}
 export const useTableStore = defineStore("tableStore", {
   state: () => ({
-    tables: [
-      {
-        name: "users",
-        id: "124",
-        tbData: [
-          {
-            name: "name3",
-            data: [],
-            type: "Object",
-            nullable: "Yes",
-            id: "12355",
-          },
-
-          {
-            name: "name3",
-            data: [],
-            type: "Object",
-            nullable: "Yes",
-            id: "12355",
-          },
-        ],
-
-        data: [
-          {
-            rowId: "d3r3f34f3",
-            headerId: "2ed34343td65",
-            id: "646",
-            value: "654",
-          },
-          {
-            headerId: "2ed34343td65",
-            id: "6",
-            value: "66",
-          },
-          {
-            headerId: "2ed34343td65",
-            id: "124r3rf333t44",
-            value: "fff",
-          },
-        ],
-      },
-    ],
-    currentTable: {},
+    tables: [] as Table[],
+    currentTable: {} as Table,
   }),
 
-  getters: {
-    getTableByid: (state) => {
-      return (id) => state.tables.find((tb) => tb.id === id);
-    },
-  },
+  getters: {},
   actions: {
-    setTable(id) {
-      const asd = this.tables.find((tb) => tb.id == id);
+    setTable(id: string) {
+      const table = this.tables.find((tb) => tb.id === id);
 
-      this.currentTable = {
-        ...asd,
-        tbData: [...asd.tbData],
-      };
+      if (table) {
+        this.currentTable = {
+          ...table,
+          tbData: [...table.tbData],
+        };
+      }
     },
 
-    createNewTable({ name, id }) {
-      const newTable = {
+    createNewTable({ name, id }: { name: string; id: string }) {
+      const newTable: Table = {
         name,
         id,
         tbData: [],
+        rowsData: [],
       };
       this.tables.push(newTable);
     },
 
     addHeader() {
-      const newHeader = {
+      const newHeader: TableHeader = {
         name: "",
-        data: [],
         type: null,
         nullable: null,
         id: uuid(),
@@ -85,8 +60,14 @@ export const useTableStore = defineStore("tableStore", {
           nullable: true,
         },
       };
-      console.log(this.currentTable);
+
       this.currentTable.tbData.push({ ...newHeader });
+    },
+    updateRow(table: Table) {
+      this.tables = this.tables.map((tb) => (tb.id === table.id ? table : tb));
+
+      console.log(this.tables, "asd");
+      this.currentTable = table;
     },
     update() {
       const id = this.currentTable.id;
@@ -97,12 +78,12 @@ export const useTableStore = defineStore("tableStore", {
         tbData: [...this.currentTable.tbData],
       });
     },
-    addNext(index) {
-      const newHeader = {
+
+    addNext(index: number) {
+      const newHeader: TableHeader = {
         name: "",
-        data: [],
         type: "",
-        nullable: "",
+        nullable: null,
         id: uuid(),
         required: {
           name: true,
@@ -112,13 +93,19 @@ export const useTableStore = defineStore("tableStore", {
       };
       this.currentTable.tbData.splice(index + 1, 0, { ...newHeader });
     },
-    remove(id) {
+    remove(id: string) {
       const index = this.currentTable.tbData.findIndex((tb) => tb.id === id);
 
       this.currentTable.tbData.splice(index, 1);
     },
-    updateHeader(data, id) {
-      this.currentTable.tbData.find((header) => header.id === id).data = data;
+    updateHeader(data: any, id: string) {
+      const header = this.currentTable.tbData.find(
+        (header) => header.id === id
+      );
+
+      if (header) {
+        header.data = data;
+      }
     },
   },
 });

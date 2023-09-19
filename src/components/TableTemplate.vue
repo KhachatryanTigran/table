@@ -10,11 +10,8 @@
   </router-link>
 </template>
 
-<script setup>
-import { ref, onMounted, watch, onUpdated, computed } from "vue";
-import { useTableStore } from "../stores/counter";
-import { v4 as uuid } from "uuid";
-const tableStore = useTableStore();
+<script setup lang="ts">
+import { defineProps } from "vue";
 
 const props = defineProps(["table"]);
 </script>
