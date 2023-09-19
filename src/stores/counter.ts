@@ -68,7 +68,9 @@ export const useTableStore = defineStore("tableStore", {
       console.log(this.currentTable);
       this.currentTable.tbData.push({ ...newHeader });
     },
-    update(id) {
+    update() {
+      const id = this.currentTable.id;
+
       const index = this.tables.findIndex((tb) => tb.id === id);
       this.tables.splice(index, 1, {
         ...this.currentTable,
@@ -95,6 +97,10 @@ export const useTableStore = defineStore("tableStore", {
       const index = this.currentTable.tbData.findIndex((tb) => tb.id === id);
 
       this.currentTable.tbData.splice(index, 1);
+    },
+    updateHeader(data, id) {
+      console.log(data, id);
+      this.currentTable.tbData.find((header) => header.id === id).data = data;
     },
   },
 });

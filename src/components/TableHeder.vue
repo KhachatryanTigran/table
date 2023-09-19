@@ -76,7 +76,6 @@ function addNewHeader() {
 
 onMounted(() => {
   setTable(tableId);
-  console.log(tableStore.currentTable, "currentTable");
 });
 onUpdated(() => {
   setTimeout(() => {

@@ -20,17 +20,18 @@
               v-for="rowData in table.tbData"
               :key="rowData.id"
             >
-              <DataRow :rowData="rowData" />
+              <TableRow :rowData="rowData" />
             </td>
           </tr>
         </tbody>
       </table>
     </div>
+    <button @click="tableStore.update">update</button>
   </div>
 </template>
 
 <script setup>
-import DataRow from "./DataRow.vue";
+import TableRow from "./TableRow.vue";
 import { ref, onMounted, watch, onUpdated } from "vue";
 import { useTableStore } from "../stores/counter";
 import { useRoute } from "vue-router";
