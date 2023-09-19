@@ -31,7 +31,8 @@
     </div>
     <router-link :to="{ name: 'MyTable', params: { id: table.id } }"
       >Go to table</router-link
-    >
+    ><router-link to="/all">Go all tables</router-link
+    ><router-link to="/">Home</router-link>
   </div>
 </template>
 
@@ -53,7 +54,7 @@ function check(data) {
   data.tbData.map((el) => {
     el.name.trim() ? (el.required.name = false) : (el.required.name = true);
     el.type ? (el.required.type = false) : (el.required.type = true);
-    el.nullable !== ""
+    el.nullable !== null
       ? (el.required.nullable = false)
       : (el.required.nullable = true);
   });

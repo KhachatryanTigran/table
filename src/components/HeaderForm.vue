@@ -81,20 +81,6 @@ import { v4 as uuid } from "uuid";
 const tableStore = useTableStore();
 const { header, index } = defineProps(["header", "index"]);
 
-// const emit = defineEmits(["update:header"]);
-
-// const value = computed({
-//   get() {
-//     return header;
-//   },
-//   set(value) {
-//     if (!value.name.length) {
-//       alert("fff");
-//     }
-//     emit("update:header", value);
-//   },
-// });
-
 const headerData = ref({
   name: header.name,
   type: header.type,
@@ -106,12 +92,11 @@ const selectNullable = ref([
   { value: true, label: "Yes" },
   { value: false, label: "No" },
 ]);
-
+console.log(header);
 function remove(e) {
   e.preventDefault();
   e.stopPropagation();
 
-  console.log(header);
   tableStore.remove(header.id);
 }
 function addAditionalHeader() {

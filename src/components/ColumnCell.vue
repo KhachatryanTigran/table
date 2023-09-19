@@ -34,7 +34,7 @@ function cellChange(e) {
   }
 }
 onMounted(() => {
-  if (!data.value) {
+  if (!data.value && !nullable) {
     message.value = "required non nullable";
   }
 });

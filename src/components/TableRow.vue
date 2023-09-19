@@ -1,15 +1,6 @@
 <template>
   <div class="flex flex-col">
     <div v-for="data in columnData" :key="data.id" class="gap-2">
-      <!-- <input
-      class="border-spacing-1 border-solid border-black p-4"
-      :type="type"
-      placeholder="data"
-      :value="data.value"
-      :key="data.id"
-      @input="change($event, data.id)"
-    />
-    <div class="text-xs text-red-600 m-1">{{ message }}</div> -->
       <ColumnCell
         :data="data"
         @change="change"

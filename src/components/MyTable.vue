@@ -26,7 +26,11 @@
         </tbody>
       </table>
     </div>
-    <button @click="tableStore.update">update</button>
+    <button class="m-3" @click="tableStore.update">Update</button>
+    <router-link :to="{ name: 'TableHeder', params: { id: tableId } }"
+      >Go to Headers</router-link
+    >
+    <button class="m-3" @click="asd">console</button>
   </div>
 </template>
 
@@ -42,7 +46,9 @@ const table = ref({});
 const route = useRoute();
 const tableId = route.params.id;
 const editable = ref(false);
-
+function asd() {
+  console.log(tableStore.tables);
+}
 function editData() {
   editable.value = true;
 }
