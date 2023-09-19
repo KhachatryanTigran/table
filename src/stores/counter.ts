@@ -15,12 +15,32 @@ export const useTableStore = defineStore("tableStore", {
             nullable: "Yes",
             id: "12355",
           },
+
           {
             name: "name3",
             data: [],
             type: "Object",
             nullable: "Yes",
             id: "12355",
+          },
+        ],
+
+        data: [
+          {
+            rowId: "d3r3f34f3",
+            headerId: "2ed34343td65",
+            id: "646",
+            value: "654",
+          },
+          {
+            headerId: "2ed34343td65",
+            id: "6",
+            value: "66",
+          },
+          {
+            headerId: "2ed34343td65",
+            id: "124r3rf333t44",
+            value: "fff",
           },
         ],
       },

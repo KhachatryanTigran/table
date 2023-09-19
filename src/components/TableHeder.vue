@@ -1,11 +1,9 @@
 <template>
-  <div class="flex flex-col p-5 m-4 items-center">
-    <h2
-      class="text-center text-3xl font-bold tracking-tighter text-rose-500 m-2"
-    >
+  <div class="flex flex-col bg-white mt-3 p-4 w-full items-center">
+    <h2 class="text-center text-3xl font-bold text-teal-800 m-2">
       {{ table.name ? table.name.toUpperCase() : "No Name" }}
     </h2>
-    <div class="border-solid border-slate-500 border-2 rounded-md w-full">
+    <div class="w-full">
       <HeaderForm
         v-for="(header, index) in table?.tbData"
         :key="header.id"
@@ -14,25 +12,11 @@
       />
 
       <div class="flex flex-row justify-end gap-3 m-5">
-        <button
-          @click.stop="addNewHeader"
-          class="bg-emerald-700 p-4 rounded-md text-white"
-        >
-          Add Header
-        </button>
-        <button
-          @click="updateTable"
-          class="bg-emerald-700 p-4 rounded-md text-white"
-        >
-          Update
-        </button>
+        <MyButton :click="addNewHeader"> Add Header </MyButton>
+        <MyButton :click="updateTable"> Update </MyButton>
       </div>
       <div class="text-lg text-sky-800 p-2">{{ message }}</div>
     </div>
-    <router-link :to="{ name: 'MyTable', params: { id: table.id } }"
-      >Go to table</router-link
-    ><router-link to="/all">Go all tables</router-link
-    ><router-link to="/">Home</router-link>
   </div>
 </template>
 
@@ -41,7 +25,7 @@ import { useRoute } from "vue-router";
 import { ref, onMounted, watch, onUpdated } from "vue";
 import { useTableStore } from "../stores/counter";
 import { v4 as uuid } from "uuid";
-
+import MyButton from "./UI/MyButton.vue";
 import HeaderForm from "./HeaderForm.vue";
 const route = useRoute();
 

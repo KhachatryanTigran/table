@@ -1,28 +1,29 @@
 <template>
-  <div>
-    <div class="flex justify-start">
+  <div class="flex flex-col">
+    <div class="bg-white m-3 p-4 min-w-max">
       <div v-for="table in tableStore.tables">
-        <TableTemplate :table="table" :key="table.id" @getId="getId" />
+        <TableTemplate :table="table" :key="table.id" />
+      </div>
+      <div class="pt-5 m-2 flex justify-center">
+        <router-link class="p-2 hover:text-gray-600 font-bold" to="/"
+          >Create new table</router-link
+        >
       </div>
     </div>
-    <MyTable v-if="tableId" :id="tableId" />
   </div>
 </template>
 
 <script setup>
+import Home from "./Home.vue";
 import MyTable from "./MyTable.vue";
 import { useRoute } from "vue-router";
 import { ref, onMounted, watch, onUpdated } from "vue";
 import { useTableStore } from "../stores/counter";
 import { v4 as uuid } from "uuid";
 import TableTemplate from "./TableTemplate.vue";
-const tableId = ref("");
+
 const tableStore = useTableStore();
 
-function getId(id) {
-  tableId.value = id;
-  console.log(tableId.value);
-}
 onMounted(() => {});
 onUpdated(() => {
   console.log("updated");

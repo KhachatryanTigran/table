@@ -31,8 +31,8 @@ import { v4 as uuid } from "uuid";
 import ColumnCell from "./ColumnCell.vue";
 import { ref, onMounted, watch, onUpdated } from "vue";
 import { useTableStore } from "../stores/counter";
+import MyButton from "./UI/MyButton.vue";
 const { rowData } = defineProps(["rowData"]);
-console.log(rowData, "rowData");
 
 const columnData = ref([...rowData.data]);
 const tableStore = useTableStore();

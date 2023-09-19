@@ -12,7 +12,7 @@ app.use(VueClick);
 const pinia = createPinia();
 app.use(pinia);
 app.use(router);
-// app.use(plugin, defaultConfig);
+
 app.use(plugin, defaultConfig(config));
 // app.component("MyTable", {
 //   MyTable,

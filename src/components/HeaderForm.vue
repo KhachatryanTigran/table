@@ -1,11 +1,6 @@
 <template>
-  <div
-    class="bg-slate-50 hover:bg-sky-100 flex-row flex gap-10 border-solid border-teal-600 border-2 m-5 p-1 rounded-md"
-  >
-    <form
-      @submit.prevent="save"
-      class="flex flex-row justify-between gap-10 w-full p-0"
-    >
+  <div class="bg-slate-50 hover:bg-teal-50 gap-10 m-5 p-1 rounded-md">
+    <form class="flex flex-row justify-between items-center w-full p-2">
       <svg
         @click="addAditionalHeader"
         xmlns="http://www.w3.org/2000/svg"
@@ -78,6 +73,7 @@
 import { ref, onMounted, watch, onUpdated, computed } from "vue";
 import { useTableStore } from "../stores/counter";
 import { v4 as uuid } from "uuid";
+import MyInput from "./UI/MyInput.vue";
 const tableStore = useTableStore();
 const { header, index } = defineProps(["header", "index"]);
 

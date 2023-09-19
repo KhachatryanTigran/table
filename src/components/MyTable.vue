@@ -1,5 +1,5 @@
 <template>
-  <div class="px-4 sm:px-6 lg:px-8">
+  <div class="bg-white w-full mt-3 p-4">
     <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8 flex flex-col">
       <table class="min-w-fit divide-y divide-gray-300 m-5">
         <thead class=" ">
@@ -26,39 +26,54 @@
         </tbody>
       </table>
     </div>
-    <button class="m-3" @click="tableStore.update">Update</button>
-    <router-link :to="{ name: 'TableHeder', params: { id: tableId } }"
-      >Go to Headers</router-link
-    >
-    <button class="m-3" @click="asd">console</button>
+    <div class="flex gap-3">
+      <MyButton :click="tableStore.update">Update</MyButton>
+      <router-link
+        class="p-2 bg-teal-600 rounded-md text-white text-center hover:bg-teal-800"
+        :to="{ name: 'TableHeder', params: { id: route.params.id } }"
+        >Change Headers</router-link
+      >
+    </div>
+    <button @click="addRow">addRow</button>
   </div>
 </template>
 
 <script setup>
+import MyButton from "./UI/MyButton.vue";
 import TableRow from "./TableRow.vue";
-import { ref, onMounted, watch, onUpdated } from "vue";
+import { ref, onMounted, watch, onUpdated, toRef } from "vue";
 import { useTableStore } from "../stores/counter";
 import { useRoute } from "vue-router";
+
 const tableStore = useTableStore();
-const { getTableByid, setTable, currentTable, update } = tableStore;
-const getTable = getTableByid;
+const { setTable, currentTable, update } = tableStore;
+
 const table = ref({});
 const route = useRoute();
-const tableId = route.params.id;
-const editable = ref(false);
-function asd() {
-  console.log(tableStore.tables);
-}
-function editData() {
-  editable.value = true;
+function addRow() {
+  console.log(table);
+  const row = {};
+  table.value.tbData.forEach((el) => {
+    row[el.name] = null;
+  });
+  console.log(row);
 }
 function updateTable() {
   update(table.value.id);
-  editable.value = !editable.value;
 }
 onMounted(() => {
-  setTable(tableId);
+  console.log("mounted");
+  console.log(route.params.id);
+  setTable(route.params.id);
 });
+watch(
+  () => route.params.id,
+  (id) => {
+    setTable(id);
+  },
+  { immediate: true }
+);
+
 watch(
   () => tableStore.currentTable,
   (newTable, oldTable) => {
