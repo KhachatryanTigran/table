@@ -37,11 +37,7 @@
       <div>
         <select v-model="header.nullable">
           <option disabled value="">Is Nullable</option>
-          <option
-            v-for="option in selectNullable"
-            :value="option.value"
-            :key="type"
-          >
+          <option v-for="option in selectNullable" :value="option.value">
             {{ option.label }}
           </option>
         </select>
@@ -70,25 +66,24 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, watch, onUpdated, computed } from "vue";
+import { ref, onMounted, onUpdated } from "vue";
 import { useTableStore } from "../stores/counter";
-import { v4 as uuid } from "uuid";
-import MyInput from "./UI/MyInput.vue";
+
 const tableStore = useTableStore();
 const { header, index } = defineProps(["header", "index"]);
 
-const headerData = ref({
-  name: header.name,
-  type: header.type,
-  nullable: header.nullable,
-});
-const errMessage = ref("");
+// const headerData = ref({
+//   name: header.name,
+//   type: header.type,
+//   nullable: header.nullable,
+// });
+
 const selectType = ref(["String", "Number"]);
 const selectNullable = ref([
   { value: true, label: "Yes" },
   { value: false, label: "No" },
 ]);
-console.log(header);
+
 function remove(e) {
   e.preventDefault();
   e.stopPropagation();

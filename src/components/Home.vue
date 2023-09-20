@@ -23,18 +23,23 @@ import router from "../router/index";
 import { ref } from "vue";
 import { useTableStore } from "../stores/counter";
 import { v4 as uuid } from "uuid";
+interface TableData {
+  name: string;
+  id: string;
+}
 
 const { createNewTable } = useTableStore();
-const data = ref({
+const data = ref<TableData>({
   name: "",
   id: uuid(),
 });
 
 function create() {
-  createNewTable({
+  const newTableData: TableData = {
     name: data.value.name,
     id: data.value.id,
-  });
+  };
+  createNewTable(newTableData);
   router.push(`/table/${data.value.id}`);
 }
 </script>
