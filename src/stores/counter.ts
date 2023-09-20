@@ -14,7 +14,7 @@ export interface Table {
 
 export interface TableHeader {
   name: string;
-  type: string | null;
+  type: string;
   nullable: boolean | null;
   id: string;
   required: {
@@ -55,7 +55,7 @@ export const useTableStore = defineStore("tableStore", {
     addHeader() {
       const newHeader: TableHeader = {
         name: "",
-        type: null,
+        type: "",
         nullable: null,
         id: uuid(),
         required: {

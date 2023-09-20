@@ -70,7 +70,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, defineProps } from "vue";
+import { ref } from "vue";
 import { useTableStore, TableHeader } from "../stores/counter";
 
 const tableStore = useTableStore();
