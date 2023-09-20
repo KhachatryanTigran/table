@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col bg-white mt-3 p-4 w-full items-center">
     <h2 class="text-center text-3xl font-bold text-teal-800 m-2">
-      {{ table.name ? table.name.toUpperCase() : "No Name" }}
+      {{ table?.name ? table.name.toUpperCase() : "No Name" }}
     </h2>
     <div class="w-full">
       <HeaderForm
@@ -21,22 +21,22 @@
 </template>
 
 <script setup lang="ts">
-import { useRoute } from "vue-router";
+import { useRoute, RouteLocationNormalizedLoaded } from "vue-router";
 import { ref, onMounted, watch, onUpdated, Ref } from "vue";
-import { useTableStore } from "../stores/counter";
+import { useTableStore, Table } from "../stores/counter";
 
 import MyButton from "./UI/MyButton.vue";
 import HeaderForm from "./HeaderForm.vue";
 
-const route = useRoute();
+const route: RouteLocationNormalizedLoaded = useRoute();
 
 const { setTable, addHeader, update } = useTableStore();
 const tableStore = useTableStore();
-const tableId = route.params.id;
+const tableId: string = route.params.id as string;
 const message: Ref<string> = ref("");
-const table: Ref<any> = ref({});
+const table: Ref<Table | undefined> = ref();
 
-function check(data: any) {
+function check(data: Table) {
   data.tbData.map((el: any) => {
     el.name.trim() ? (el.required.name = false) : (el.required.name = true);
     el.type ? (el.required.type = false) : (el.required.type = true);

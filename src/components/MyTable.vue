@@ -32,16 +32,9 @@
 import MyButton from "./UI/MyButton.vue";
 import TableRow from "./TableRow.vue";
 import { v4 as uuid } from "uuid";
-import { ref, onMounted, watch, toRef, Ref } from "vue";
-import { useTableStore } from "../stores/counter";
-import { useRoute } from "vue-router";
-
-interface Header {
-  id: string;
-  name: string;
-  type: string;
-  nullable: boolean;
-}
+import { ref, onMounted, watch, Ref } from "vue";
+import { useTableStore, TableHeader } from "../stores/counter";
+import { useRoute, RouteLocationNormalizedLoaded } from "vue-router";
 
 interface Row {
   id: string;
@@ -51,11 +44,18 @@ interface Row {
 const tableStore = useTableStore();
 const { setTable, updateRow } = tableStore;
 
-const table: Ref<{ tbData: Header[]; rowsData: Row[] }> = ref({
+const table: Ref<{
+  tbData: Array<TableHeader>;
+  rowsData: Row[];
+  name: string;
+  id: string;
+}> = ref({
   tbData: [],
   rowsData: [],
+  name: "",
+  id: "",
 });
-const route = useRoute();
+const route: RouteLocationNormalizedLoaded = useRoute();
 
 function rowchange(data: string | number, headerName: string, id: string) {
   table.value.rowsData.map((row) => {
@@ -69,9 +69,9 @@ function addRow() {
   const row: Row = { id: uuid() };
   table.value.tbData.forEach((el) => {
     if (el.type === "Number") {
-      row[el.name] = 55;
+      row[el.name] = 0;
     } else {
-      row[el.name] = "text";
+      row[el.name] = "";
     }
   });
   table.value.rowsData.push(row);
@@ -95,11 +95,11 @@ function updateTable() {
 }
 
 onMounted(() => {
-  setTable(route.params.id);
+  setTable(route.params.id as string);
 });
 
 watch(
-  () => route.params.id,
+  () => route.params.id as string,
   (id) => {
     setTable(id);
   },

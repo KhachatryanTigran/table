@@ -2,7 +2,7 @@
   <div class="bg-slate-50 hover:bg-teal-50 gap-10 m-5 p-1 rounded-md">
     <form class="flex flex-row justify-between items-center w-full p-2">
       <svg
-        @click="addAditionalHeader"
+        @click="addAdditionalHeader"
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24"
         fill="currentColor"
@@ -37,7 +37,11 @@
       <div>
         <select v-model="header.nullable">
           <option disabled value="">Is Nullable</option>
-          <option v-for="option in selectNullable" :value="option.value">
+          <option
+            v-for="option in selectNullable"
+            :value="option.value"
+            :key="option.label"
+          >
             {{ option.label }}
           </option>
         </select>
@@ -66,36 +70,33 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onUpdated } from "vue";
-import { useTableStore } from "../stores/counter";
+import { ref, defineProps } from "vue";
+import { useTableStore, TableHeader } from "../stores/counter";
 
 const tableStore = useTableStore();
-const { header, index } = defineProps(["header", "index"]);
+interface Props {
+  header: TableHeader;
+  index: number;
+}
 
-// const headerData = ref({
-//   name: header.name,
-//   type: header.type,
-//   nullable: header.nullable,
-// });
+const { header, index } = defineProps<Props>();
 
-const selectType = ref(["String", "Number"]);
-const selectNullable = ref([
+const selectType = ref<string[]>(["String", "Number"]);
+const selectNullable = ref<{ value: boolean; label: string }[]>([
   { value: true, label: "Yes" },
   { value: false, label: "No" },
 ]);
 
-function remove(e) {
+function remove(e: MouseEvent) {
   e.preventDefault();
   e.stopPropagation();
 
   tableStore.remove(header.id);
 }
-function addAditionalHeader() {
+
+function addAdditionalHeader() {
   tableStore.addNext(index);
 }
-
-onMounted(() => {});
-onUpdated(() => {});
 </script>
 
 <style lang="scss" scoped></style>

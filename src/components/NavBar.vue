@@ -14,17 +14,11 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, onUpdated } from "vue";
 import { useTableStore } from "../stores/counter";
 
 import TableTemplate from "./TableTemplate.vue";
 
 const tableStore = useTableStore();
-
-onMounted(() => {});
-onUpdated(() => {
-  console.log("updated");
-});
 </script>
 
 <style lang="scss" scoped></style>

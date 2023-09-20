@@ -1,14 +1,18 @@
 import { defineStore } from "pinia";
 import { v4 as uuid } from "uuid";
 
-interface Table {
+export interface Row {
+  id: string;
+  [key: string]: string | number;
+}
+export interface Table {
   name: string;
   id: string;
   tbData: Array<TableHeader>;
-  rowsData: any[];
+  rowsData: Row[];
 }
 
-interface TableHeader {
+export interface TableHeader {
   name: string;
   type: string | null;
   nullable: boolean | null;
@@ -66,7 +70,6 @@ export const useTableStore = defineStore("tableStore", {
     updateRow(table: Table) {
       this.tables = this.tables.map((tb) => (tb.id === table.id ? table : tb));
 
-      console.log(this.tables, "asd");
       this.currentTable = table;
     },
     update() {
@@ -98,14 +101,14 @@ export const useTableStore = defineStore("tableStore", {
 
       this.currentTable.tbData.splice(index, 1);
     },
-    updateHeader(data: any, id: string) {
-      const header = this.currentTable.tbData.find(
-        (header) => header.id === id
-      );
+    // updateHeader(data: TableHeader, id: string) {
+    //   const header = this.currentTable.tbData.find(
+    //     (header) => header.id === id
+    //   );
 
-      if (header) {
-        header.data = data;
-      }
-    },
+    //   if (header) {
+    //     header.data = data;
+    //   }
+    // },
   },
 });

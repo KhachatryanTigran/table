@@ -12,8 +12,15 @@
 
 <script setup lang="ts">
 import { ref, defineProps, defineEmits } from "vue";
+import { TableHeader, Row } from "../stores/counter";
 
-const { rowData, header } = defineProps(["rowData", "header"]);
+interface Props {
+  rowData: Row;
+  header: TableHeader;
+}
+
+const { rowData, header } = defineProps<Props>();
+
 const emit = defineEmits(["rowchange"]);
 
 const errMessage = ref<string>("");
