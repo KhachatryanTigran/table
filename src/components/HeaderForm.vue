@@ -1,5 +1,7 @@
 <template>
-  <div class="bg-slate-50 hover:bg-teal-50 gap-10 m-5 p-1 rounded-md">
+  <div
+    class="bg-slate-50 hover:bg-slate-200 hover:shadow-xl shadow-md gap-10 m-5 p-1 rounded-md"
+  >
     <form class="flex flex-row justify-between items-center w-full p-2">
       <svg
         @click="addAdditionalHeader"
@@ -15,17 +17,16 @@
         />
       </svg>
 
-      <p>{{ index + 1 }}</p>
-
-      <div>
+      <div class="flex gap-2 items-center">
+        <p>{{ index + 1 }}</p>
         <input
           :placeholder="!header.name ? ` Field is required` : `Name`"
           v-model="header.name"
-          class="p-3 placeholder:text-red-600 placeholder:text-sm placeholder:font-mono"
+          class="p-3 placeholder:text-red-600 placeholder:text-sm placeholder:font-mono font-mono rounded-md"
         />
       </div>
       <div>
-        <select v-model="header.type">
+        <select v-model="header.type" class="p-1 rounded-md">
           <option disabled value="">Select Type</option>
           <option v-for="type in selectType" :value="type" :key="type">
             {{ type }}
@@ -36,7 +37,7 @@
         </div>
       </div>
       <div>
-        <select v-model="header.nullable">
+        <select v-model="header.nullable" class="p-1 rounded-md">
           <option disabled value="">Is Nullable</option>
           <option
             v-for="option in selectNullable"

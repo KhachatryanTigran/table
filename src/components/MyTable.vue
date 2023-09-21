@@ -73,7 +73,7 @@ function addRow() {
   const row: Row = { id: uuid() };
   table.value.tbData.forEach((el) => {
     if (el.type === "Number") {
-      row[el.name] = 0;
+      row[el.name] = NaN;
     } else {
       row[el.name] = "";
     }
