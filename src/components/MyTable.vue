@@ -1,16 +1,18 @@
 <template>
-  <div class="bg-white w-full mt-3 p-4">
+  <div class="bg-white w-full mt-3 p-4 flex flex-col items-center">
+    <h1 class="text-xl text-teal-600">asd</h1>
     <div class="flex gap-3">
       <div v-for="header in table.tbData" :key="header.id">
         <div
           class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 min-w-200px"
         >
           {{ header.name }}
-          <div v-for="rowData in table.rowsData">
+          <div v-for="rowData in table.rowsData" :key="rowData.id">
             <TableRow
               :rowData="rowData"
               :header="header"
               @rowchange="rowchange"
+              @removeRow="removeRow"
             />
           </div>
         </div>
@@ -21,7 +23,7 @@
       <MyButton :click="updateTable">Update</MyButton>
       <router-link
         class="p-2 bg-teal-600 rounded-md text-white text-center hover:bg-teal-800"
-        :to="{ name: 'TableHeder', params: { id: route.params.id } }"
+        :to="{ name: 'TableHeader', params: { id: route.params.id } }"
         >Change Headers</router-link
       >
     </div>
@@ -64,7 +66,9 @@ function rowchange(data: string | number, headerName: string, id: string) {
     }
   });
 }
-
+function removeRow(id: string) {
+  table.value.rowsData = table.value.rowsData.filter((tb) => tb.id !== id);
+}
 function addRow() {
   const row: Row = { id: uuid() };
   table.value.tbData.forEach((el) => {

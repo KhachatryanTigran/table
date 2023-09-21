@@ -31,6 +31,9 @@ export const useTableStore = defineStore("tableStore", {
 
   getters: {},
   actions: {
+    setTableFromStorage(tables: Table[]) {
+      this.tables = tables;
+    },
     setTable(id: string) {
       const table = this.tables.find((tb) => tb.id === id);
 
@@ -100,6 +103,11 @@ export const useTableStore = defineStore("tableStore", {
       const index = this.currentTable.tbData.findIndex((tb) => tb.id === id);
 
       this.currentTable.tbData.splice(index, 1);
+    },
+
+    removeTable(id: string) {
+      this.tables = this.tables.filter((tb) => tb.id !== id);
+      console.log("remove table", this.tables);
     },
     // updateHeader(data: TableHeader, id: string) {
     //   const header = this.currentTable.tbData.find(

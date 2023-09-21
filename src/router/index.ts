@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
+import NotFound from "../components/NotFound.vue";
 
-import TableHeder from "../components/TableHeder.vue";
+import TableHeader from "../components/TableHeader.vue";
 import MyTable from "../components/MyTable.vue";
 
 const router = createRouter({
@@ -19,10 +20,11 @@ const router = createRouter({
     },
     {
       path: "/table/:id",
-      name: "TableHeder",
+      name: "TableHeader",
 
-      component: TableHeder,
+      component: TableHeader,
     },
+    { path: "/:pathMatch(.*)*", name: "NotFound", component: NotFound },
   ],
 });
 
