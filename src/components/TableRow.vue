@@ -1,17 +1,25 @@
 <template>
-  <div class="flex flex-col">
-    <input
-      class="bg-gray-50 p-2 m-0 mt-2"
-      :type="header.type"
-      :value="rowData[header.name]"
-      @input="change"
-    />
-    <div class="text-xs text-red-500 p-0 m-0">{{ errMessage }}</div>
+  <div class="flex gap-2 items-center">
+    <i
+      @click="click"
+      class="cursor-pointer text-sm opacity-0 hover:opacity-100 duration-300 text-red-600"
+      >X</i
+    >
+
+    <div class="flex flex-col">
+      <input
+        class="bg-gray-50 p-2 m-0 mt-2"
+        :type="header.type"
+        :value="rowData[header.name]"
+        @input="change"
+      />
+      <div class="text-xs text-red-500 p-0 m-0">{{ errMessage }}</div>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import { TableHeader, Row } from "../stores/counter";
 
 interface Props {
@@ -21,11 +29,13 @@ interface Props {
 
 const { rowData, header } = defineProps<Props>();
 
-const emit = defineEmits(["rowchange"]);
+const emit = defineEmits(["rowchange", "removeRow"]);
 
 const errMessage = ref<string>("");
-
-function change(e: Event) {
+function click(): void {
+  emit("removeRow", rowData.id);
+}
+function change(e: Event): void {
   const value = (e.target as HTMLInputElement).value;
   if (header.nullable || value) {
     emit("rowchange", value, header.name, rowData.id);
@@ -35,6 +45,12 @@ function change(e: Event) {
     errMessage.value = "Field is required";
   }
 }
+
+onMounted(() => {
+  if (!rowData[header.name] && !header.nullable) {
+    errMessage.value = "Field is required";
+  }
+});
 </script>
 
 <style lang="scss" scoped></style>
