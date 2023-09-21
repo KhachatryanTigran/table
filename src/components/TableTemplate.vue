@@ -19,6 +19,7 @@
 
 <script setup lang="ts">
 import { useTableStore, Table } from "../stores/counter";
+
 import { PropType } from "vue";
 
 const props = defineProps({
