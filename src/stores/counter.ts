@@ -18,7 +18,6 @@ export interface TableHeader {
   nullable: boolean | null;
   id: string;
   required: {
-    name: boolean;
     type: boolean;
     nullable: boolean;
   };
@@ -62,7 +61,6 @@ export const useTableStore = defineStore("tableStore", {
         nullable: null,
         id: uuid(),
         required: {
-          name: true,
           type: true,
           nullable: true,
         },
@@ -92,7 +90,6 @@ export const useTableStore = defineStore("tableStore", {
         nullable: null,
         id: uuid(),
         required: {
-          name: true,
           type: true,
           nullable: true,
         },

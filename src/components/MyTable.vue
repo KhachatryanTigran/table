@@ -1,6 +1,6 @@
 <template>
   <div class="bg-white w-full mt-3 p-4 flex flex-col items-center">
-    <h1 class="text-xl text-teal-600">asd</h1>
+    <h1 class="text-2xl text-teal-600 m-4 font-bold">{{ table.name }}</h1>
     <div class="flex gap-3">
       <div v-for="header in table.tbData" :key="header.id">
         <div

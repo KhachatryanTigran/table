@@ -18,10 +18,11 @@
       <p>{{ index + 1 }}</p>
 
       <div>
-        <input placeholder="Name" v-model="header.name" class="p-3" />
-        <div v-if="header.required.name" class="text-red-600 text-sm">
-          Name is required
-        </div>
+        <input
+          :placeholder="!header.name ? ` Field is required` : `Name`"
+          v-model="header.name"
+          class="p-3 placeholder:text-red-600 placeholder:text-sm placeholder:font-mono"
+        />
       </div>
       <div>
         <select v-model="header.type">
@@ -51,19 +52,7 @@
       </div>
 
       <div>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 24 24"
-          fill="currentColor"
-          class="w-6 h-6 cursor-pointer text-teal-500"
-          @click="remove"
-        >
-          <path
-            fill-rule="evenodd"
-            d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zm-1.72 6.97a.75.75 0 10-1.06 1.06L10.94 12l-1.72 1.72a.75.75 0 101.06 1.06L12 13.06l1.72 1.72a.75.75 0 101.06-1.06L13.06 12l1.72-1.72a.75.75 0 10-1.06-1.06L12 10.94l-1.72-1.72z"
-            clip-rule="evenodd"
-          />
-        </svg>
+        <RemoveIcon :remove="remove" />
       </div>
     </form>
   </div>
@@ -72,7 +61,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { useTableStore, TableHeader } from "../stores/counter";
-
+import RemoveIcon from "./UI/RemoveIcon.vue";
 const tableStore = useTableStore();
 interface Props {
   header: TableHeader;

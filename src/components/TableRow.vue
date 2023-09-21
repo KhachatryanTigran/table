@@ -8,12 +8,12 @@
 
     <div class="flex flex-col">
       <input
-        class="bg-gray-50 p-2 m-0 mt-2"
+        class="bg-gray-50 p-2 m-0 mt-2 placeholder:text-red-600"
         :type="header.type"
+        :placeholder="errMessage"
         :value="rowData[header.name]"
         @input="change"
       />
-      <div class="text-xs text-red-500 p-0 m-0">{{ errMessage }}</div>
     </div>
   </div>
 </template>
