@@ -2,7 +2,7 @@
   <div>
     <svg
       @click="props.remove"
-      class="cursor-pointer font-bold text-xl text-teal-600 hover:text-red-600 m-0 hover:animate-spin w-8 h-8"
+      class="cursor-pointer font-bold text-xl text-teal-600 hover:text-red-600 m-0 hover:animate-spin w-6 h-6 md:w-8 sm:h-8"
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
       fill="currentColor"

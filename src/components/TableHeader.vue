@@ -1,8 +1,12 @@
 <template>
-  <div class="flex flex-col bg-white mt-3 p-4 w-full items-center">
-    <h2 class="text-center text-3xl font-bold text-teal-800 m-2">
+  <div
+    class="flex flex-col bg-white mt-3 p-1 sm:p-2 lg:p-4 w-full items-center"
+  >
+    <h1
+      class="text-center text-md sm:text-lg md:text-xl lg:text-2xl font-semibold sm:font-bold text-teal-600 m-2"
+    >
       {{ table?.name ? table.name.toUpperCase() : "No Name" }}
-    </h2>
+    </h1>
     <div class="w-full">
       <HeaderForm
         v-for="(header, index) in table?.tbData"

@@ -1,12 +1,13 @@
 <template>
   <div class="flex flex-col h-screen">
-    <div class="bg-white m-3 p-4 min-w-max h-screen">
+    <div class="bg-white m-1 p-1 min-w-max h-screen sm:p-3 sm:m-3">
       <div v-for="table in tables">
         <TableTemplate :table="table" :key="table.id" />
-        <!-- <button class="flex self-end">X</button> -->
       </div>
       <div class="pt-5 m-2 flex justify-center">
-        <router-link class="p-2 hover:text-gray-600 font-bold" to="/"
+        <router-link
+          class="p-1 hover:text-gray-600 font-bold text-md md:text-lg md:p-2"
+          to="/"
           >Create new table</router-link
         >
       </div>

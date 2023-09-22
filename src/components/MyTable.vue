@@ -1,10 +1,16 @@
 <template>
-  <div class="bg-white w-full mt-3 p-4 flex flex-col items-center">
-    <h1 class="text-2xl text-teal-600 m-4 font-bold">{{ table.name }}</h1>
-    <div class="flex gap-3">
+  <div
+    class="bg-white w-full mt-3 p-1 md:p-2 lg:p-4 flex flex-col items-center overflow-x-auto"
+  >
+    <h1
+      class="text-center text-md sm:text-lg md:text-xl lg:text-2xl font-semibold sm:font-bold text-teal-600 m-2"
+    >
+      {{ table.name }}
+    </h1>
+    <div class="flex gap-1 lg:gap-3 overflow-x-auto">
       <div v-for="header in table.tbData" :key="header.id">
         <div
-          class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 min-w-200px"
+          class="px-1 lg:px-3 py-3.5 text-left text-sm font-semibold text-gray-900 min-w-200px flex flex-col items-center"
         >
           {{ header.name }}
           <div v-for="rowData in table.rowsData" :key="rowData.id">
@@ -22,8 +28,8 @@
       <MyButton :click="addRow">AddRow</MyButton>
       <MyButton :click="updateTable">Update</MyButton>
       <router-link
-        class="p-2 bg-teal-600 rounded-md text-white text-center hover:bg-teal-800"
-        :to="{ name: 'TableHeader', params: { id: route.params.id } }"
+        class="bg-teal-600 rounded-md sm:text-md p-1 text-white text-center hover:bg-teal-800 text-sm lg:text-lg sm:p-2"
+        :to="{ name: ROUTES.TableHeader.NAME, params: { id: route.params.id } }"
         >Change Headers</router-link
       >
     </div>
@@ -31,6 +37,7 @@
 </template>
 
 <script setup lang="ts">
+import ROUTES from "../constants/routeConstants.ts";
 import MyButton from "./UI/MyButton.vue";
 import TableRow from "./TableRow.vue";
 import { v4 as uuid } from "uuid";

@@ -1,14 +1,14 @@
 <template>
-  <div class="flex gap-2 items-center">
+  <div class="flex gap-1 lg:gap-2 items-center overflow-x:scroll">
     <i
       @click="click"
-      class="cursor-pointer text-sm opacity-0 hover:opacity-100 duration-300 text-red-600"
+      class="cursor-pointer text-xs md:text-sm m-0 p-0 opacity-0 hover:opacity-100 duration-300 text-red-600"
       >X</i
     >
 
     <div class="flex flex-col">
       <input
-        class="bg-gray-50 p-2 m-0 mt-2 placeholder:text-red-600"
+        class="bg-gray-50 p-0 md:p-1 mt-2 placeholder:text-red-600 text-xs md:text-sm w-28"
         :type="header.type"
         :placeholder="errMessage"
         :value="rowData[header.name]"
