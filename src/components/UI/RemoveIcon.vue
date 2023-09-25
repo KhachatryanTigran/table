@@ -1,7 +1,7 @@
 <template>
   <div>
     <svg
-      @click="props.remove"
+      @click="click"
       class="cursor-pointer font-bold text-xl text-teal-600 hover:text-red-600 m-0 hover:animate-spin w-6 h-6 md:w-8 sm:h-8"
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
@@ -17,14 +17,11 @@
 </template>
 
 <script setup lang="ts">
-import { PropType } from "vue";
+const emit = defineEmits(["remove"]);
 
-const props = defineProps({
-  remove: {
-    type: Function as PropType<(e: MouseEvent) => void>,
-    required: true,
-  },
-});
+function click(e: Event) {
+  emit("remove", e);
+}
 </script>
 
 <style scoped></style>

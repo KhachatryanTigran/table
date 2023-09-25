@@ -20,18 +20,18 @@
         class="p-1 text-sm lg:text-lg sm:text-md md:p-2"
       />
       <div class="self-center">
-        <MyButton :click="create"> Create </MyButton>
+        <MyButton @btnclick="create"> Create </MyButton>
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import MyButton from "./UI/MyButton.vue";
-import router from "../router/index";
-import { ref } from "vue";
-import { useTableStore } from "../stores/counter";
 import { v4 as uuid } from "uuid";
+import { ref } from "vue";
+import router from "../router/index";
+import { useTableStore } from "../stores/counter";
+import MyButton from "./UI/MyButton.vue";
 interface TableData {
   name: string;
   id: string;
@@ -54,3 +54,4 @@ function create() {
 </script>
 
 <style scoped></style>
+../stores

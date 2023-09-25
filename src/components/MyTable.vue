@@ -13,6 +13,7 @@
           class="px-1 lg:px-3 py-3.5 text-left text-sm font-semibold text-gray-900 min-w-200px flex flex-col items-center"
         >
           {{ header.name }}
+
           <div v-for="rowData in table.rowsData" :key="rowData.id">
             <TableRow
               :rowData="rowData"
@@ -25,8 +26,8 @@
       </div>
     </div>
     <div class="flex gap-3">
-      <MyButton :click="addRow">AddRow</MyButton>
-      <MyButton :click="updateTable">Update</MyButton>
+      <MyButton @btnclick="addRow">AddRow</MyButton>
+      <MyButton @btnclick="updateTable">Update</MyButton>
       <router-link
         class="bg-teal-600 rounded-md sm:text-md p-1 text-white text-center hover:bg-teal-800 text-sm lg:text-lg sm:p-2"
         :to="{ name: ROUTES.TableHeader.NAME, params: { id: route.params.id } }"
@@ -37,13 +38,13 @@
 </template>
 
 <script setup lang="ts">
-import ROUTES from "../constants/routeConstants.ts";
-import MyButton from "./UI/MyButton.vue";
-import TableRow from "./TableRow.vue";
 import { v4 as uuid } from "uuid";
-import { ref, onMounted, watch, Ref } from "vue";
-import { useTableStore, TableHeader } from "../stores/counter";
-import { useRoute, RouteLocationNormalizedLoaded } from "vue-router";
+import { Ref, onMounted, ref, watch } from "vue";
+import { RouteLocationNormalizedLoaded, useRoute } from "vue-router";
+import ROUTES from "../constants/routeConstants.ts";
+import { TableHeader, useTableStore } from "../stores/counter";
+import TableRow from "./TableRow.vue";
+import MyButton from "./UI/MyButton.vue";
 
 interface Row {
   id: string;
@@ -54,7 +55,7 @@ const tableStore = useTableStore();
 const { setTable, updateRow } = tableStore;
 
 const table: Ref<{
-  tbData: Array<TableHeader>;
+  tbData: TableHeader[];
   rowsData: Row[];
   name: string;
   id: string;
@@ -66,10 +67,10 @@ const table: Ref<{
 });
 const route: RouteLocationNormalizedLoaded = useRoute();
 
-function rowchange(data: string | number, headerName: string, id: string) {
+function rowchange(data: string | number, headerId: string, id: string) {
   table.value.rowsData.map((row) => {
     if (row.id === id) {
-      row[headerName] = data;
+      row[headerId] = data;
     }
   });
 }
@@ -80,9 +81,9 @@ function addRow() {
   const row: Row = { id: uuid() };
   table.value.tbData.forEach((el) => {
     if (el.type === "Number") {
-      row[el.name] = NaN;
+      row[el.id] = NaN;
     } else {
-      row[el.name] = "";
+      row[el.id] = "";
     }
   });
   table.value.rowsData.push(row);
@@ -94,7 +95,7 @@ function updateTable() {
 
   table.value.rowsData.forEach((row) => {
     nonNullables.forEach((el) => {
-      if (!row[el.name]) {
+      if (!row[el.id]) {
         check = false;
       }
     });
@@ -127,3 +128,4 @@ watch(
 </script>
 
 <style lang="scss" scoped></style>
+../stores/index.ts

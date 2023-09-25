@@ -1,5 +1,21 @@
 import { defineStore } from "pinia";
 import { v4 as uuid } from "uuid";
+import { ref } from "vue";
+
+interface TableInfo {
+  name: string;
+  id: string;
+  tbData: TableHeader[];
+  rowsData: Row[];
+}
+
+type TbName = "user1" | "user2" | "user3";
+
+// const x: Record<TbName, TableInfo> = {
+//   user1: { name: "user1" },
+//   user2: { name: "user2" },
+//   user3: { name: "user3" },
+// };
 
 export interface Row {
   id: string;
@@ -8,7 +24,7 @@ export interface Row {
 export interface Table {
   name: string;
   id: string;
-  tbData: Array<TableHeader>;
+  tbData: TableHeader[];
   rowsData: Row[];
 }
 
@@ -20,100 +36,99 @@ export interface TableHeader {
   required: {
     type: boolean;
     nullable: boolean;
+    name: boolean;
   };
 }
-export const useTableStore = defineStore("tableStore", {
-  state: () => ({
-    tables: [] as Table[],
-    currentTable: {} as Table,
-  }),
+export const useTableStore = defineStore("tableStore", () => {
+  const tables = ref([] as Table[]);
+  const currentTable = ref({} as Table);
 
-  getters: {},
-  actions: {
-    setTableFromStorage(tables: Table[]) {
-      this.tables = tables;
-    },
-    setTable(id: string) {
-      const table = this.tables.find((tb) => tb.id === id);
+  function setTableFromStorage(storageTables: Table[]) {
+    tables.value = storageTables;
+  }
 
-      if (table) {
-        this.currentTable = {
-          ...table,
-          tbData: [...table.tbData],
-        };
-      }
-    },
+  function setTable(id: string) {
+    const table = tables.value.find((tb) => tb.id === id);
 
-    createNewTable({ name, id }: { name: string; id: string }) {
-      const newTable: Table = {
-        name,
-        id,
-        tbData: [],
-        rowsData: [],
+    if (table) {
+      currentTable.value = {
+        ...table,
+        tbData: [...table.tbData],
       };
-      this.tables.push(newTable);
-    },
+    }
+  }
+  function createNewTable({ name, id }: { name: string; id: string }) {
+    const newTable: Table = {
+      name,
+      id,
+      tbData: [],
+      rowsData: [],
+    };
+    tables.value.push(newTable);
+  }
 
-    addHeader() {
-      const newHeader: TableHeader = {
-        name: "",
-        type: "",
-        nullable: null,
-        id: uuid(),
-        required: {
-          type: true,
-          nullable: true,
-        },
-      };
+  function addHeader() {
+    const newHeader: TableHeader = {
+      name: "",
+      type: "",
+      nullable: null,
+      id: uuid(),
+      required: {
+        type: true,
+        nullable: true,
+        name: true,
+      },
+    };
 
-      this.currentTable.tbData.push({ ...newHeader });
-    },
-    updateRow(table: Table) {
-      this.tables = this.tables.map((tb) => (tb.id === table.id ? table : tb));
+    currentTable.value.tbData.push({ ...newHeader });
+  }
+  function updateRow(table: Table) {
+    tables.value = tables.value.map((tb) => (tb.id === table.id ? table : tb));
 
-      this.currentTable = table;
-    },
-    update() {
-      const id = this.currentTable.id;
+    currentTable.value = table;
+  }
+  function update() {
+    const id = currentTable.value.id;
 
-      const index = this.tables.findIndex((tb) => tb.id === id);
-      this.tables.splice(index, 1, {
-        ...this.currentTable,
-        tbData: [...this.currentTable.tbData],
-      });
-    },
+    const index = tables.value.findIndex((tb) => tb.id === id);
+    tables.value.splice(index, 1, {
+      ...currentTable.value,
+      tbData: [...currentTable.value.tbData],
+    });
+  }
+  function addNext(index: number) {
+    const newHeader: TableHeader = {
+      name: "",
+      type: "",
+      nullable: null,
+      id: uuid(),
+      required: {
+        type: true,
+        nullable: true,
+        name: true,
+      },
+    };
+    currentTable.value.tbData.splice(index + 1, 0, { ...newHeader });
+  }
+  function remove(id: string) {
+    const index = currentTable.value.tbData.findIndex((tb) => tb.id === id);
 
-    addNext(index: number) {
-      const newHeader: TableHeader = {
-        name: "",
-        type: "",
-        nullable: null,
-        id: uuid(),
-        required: {
-          type: true,
-          nullable: true,
-        },
-      };
-      this.currentTable.tbData.splice(index + 1, 0, { ...newHeader });
-    },
-    remove(id: string) {
-      const index = this.currentTable.tbData.findIndex((tb) => tb.id === id);
-
-      this.currentTable.tbData.splice(index, 1);
-    },
-
-    removeTable(id: string) {
-      this.tables = this.tables.filter((tb) => tb.id !== id);
-      console.log("remove table", this.tables);
-    },
-    // updateHeader(data: TableHeader, id: string) {
-    //   const header = this.currentTable.tbData.find(
-    //     (header) => header.id === id
-    //   );
-
-    //   if (header) {
-    //     header.data = data;
-    //   }
-    // },
-  },
+    currentTable.value.tbData.splice(index, 1);
+  }
+  function removeTable(id: string) {
+    tables.value = tables.value.filter((tb) => tb.id !== id);
+  }
+  return {
+    tables,
+    setTableFromStorage,
+    currentTable,
+    setTable,
+    addHeader,
+    addNext,
+    createNewTable,
+    remove,
+    removeTable,
+    update,
+    updateRow,
+  };
 });

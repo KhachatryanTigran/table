@@ -16,8 +16,8 @@
       />
 
       <div class="flex flex-row justify-end gap-3 m-5">
-        <MyButton :click="addNewHeader"> Add Header </MyButton>
-        <MyButton :click="updateTable"> Update </MyButton>
+        <MyButton @btnclick="addHeader()"> Add Header </MyButton>
+        <MyButton @btnclick="updateTable"> Update </MyButton>
       </div>
       <div class="text-lg text-sky-800 p-2">{{ message }}</div>
     </div>
@@ -25,12 +25,12 @@
 </template>
 
 <script setup lang="ts">
-import { useRoute, RouteLocationNormalizedLoaded } from "vue-router";
-import { ref, onMounted, watch, onUpdated, Ref } from "vue";
-import { useTableStore, Table } from "../stores/counter";
+import { Ref, onMounted, onUpdated, ref, watch, watchEffect } from "vue";
+import { RouteLocationNormalizedLoaded, useRoute } from "vue-router";
+import { Table, TableHeader, useTableStore } from "../stores/counter";
 
-import MyButton from "./UI/MyButton.vue";
 import HeaderForm from "./HeaderForm.vue";
+import MyButton from "./UI/MyButton.vue";
 
 const route: RouteLocationNormalizedLoaded = useRoute();
 
@@ -41,7 +41,7 @@ const message: Ref<string> = ref("");
 const table: Ref<Table | undefined> = ref();
 
 function check(data: Table) {
-  data.tbData.map((el: any) => {
+  data.tbData.map((el: TableHeader) => {
     el.name.trim() ? (el.required.name = false) : (el.required.name = true);
     el.type ? (el.required.type = false) : (el.required.type = true);
     el.nullable !== null
@@ -63,20 +63,28 @@ function updateTable() {
   }
 }
 
-function addNewHeader() {
-  addHeader();
-}
-
 onMounted(() => {
   setTable(tableId);
 });
-
+let timeoutId: number | null = null;
 onUpdated(() => {
-  setTimeout(() => {
+  if (timeoutId) {
+    clearTimeout(timeoutId);
+    timeoutId = null;
+  }
+
+  timeoutId = setTimeout(() => {
     message.value = "";
   }, 2000);
 });
-
+watchEffect(() => {
+  return () => {
+    if (timeoutId) {
+      clearTimeout(timeoutId);
+      timeoutId = null;
+    }
+  };
+});
 watch(
   () => tableStore.currentTable,
   (newTable) => {
@@ -89,3 +97,4 @@ watch(
 </script>
 
 <style></style>
+../stores

@@ -2,9 +2,7 @@
   <div
     class="bg-slate-50 hover:bg-slate-200 hover:shadow-xl shadow-md my-5 mx-1 md:mx-2 p-1 rounded-md"
   >
-    <form
-      class="flex flex-col md:flex-row justify-between items-center w-full p-0 md:p-1"
-    >
+    <form class="flex flex-row justify-between items-center w-full p-0 md:p-1">
       <svg
         @click="addAdditionalHeader"
         xmlns="http://www.w3.org/2000/svg"
@@ -67,7 +65,7 @@
       </div>
 
       <div>
-        <RemoveIcon :remove="remove" />
+        <RemoveIcon @remove="remove" />
       </div>
     </form>
   </div>
@@ -75,7 +73,7 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
-import { useTableStore, TableHeader } from "../stores/counter";
+import { TableHeader, useTableStore } from "../stores/counter";
 import RemoveIcon from "./UI/RemoveIcon.vue";
 const tableStore = useTableStore();
 interface Props {
@@ -91,10 +89,7 @@ const selectNullable = ref<{ value: boolean; label: string }[]>([
   { value: false, label: "No" },
 ]);
 
-function remove(e: MouseEvent) {
-  e.preventDefault();
-  e.stopPropagation();
-
+function remove() {
   tableStore.remove(header.id);
 }
 
@@ -104,3 +99,4 @@ function addAdditionalHeader() {
 </script>
 
 <style lang="scss" scoped></style>
+../stores

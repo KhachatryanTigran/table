@@ -2,7 +2,7 @@
 import NavBar from "./components/NavBar.vue";
 
 import { onMounted, watch } from "vue";
-import { useTableStore, Table } from "./stores/counter";
+import { Table, useTableStore } from "./stores/counter";
 const tableStore = useTableStore();
 
 onMounted(() => {
@@ -27,7 +27,7 @@ watch(
 </script>
 
 <template>
-  <div class="flex bg-gray-200">
+  <div class="flex flex-row bg-gray-200">
     <NavBar />
     <router-view />
   </div>

@@ -1,4 +1,9 @@
-export default {
+export interface RouteConfig {
+  PATH: string;
+  NAME: string;
+}
+
+const routes: Record<string, RouteConfig> = {
   Home: {
     PATH: "/",
     NAME: "Home",
@@ -16,3 +21,5 @@ export default {
     NAME: "NotFound",
   },
 };
+
+export default routes;

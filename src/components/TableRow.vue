@@ -2,8 +2,8 @@
   <div class="flex gap-1 lg:gap-2 items-center overflow-x:scroll">
     <i
       @click="click"
-      class="cursor-pointer text-xs md:text-sm m-0 p-0 opacity-0 hover:opacity-100 duration-300 text-red-600"
-      >X</i
+      class="cursor-pointer text-xs md:text-sm m-0 p-0 opacity-30 hover:opacity-100 duration-300 text-red-600 font-bold"
+      >-</i
     >
 
     <div class="flex flex-col">
@@ -11,7 +11,7 @@
         class="bg-gray-50 p-0 md:p-1 mt-2 placeholder:text-red-600 text-xs md:text-sm w-28"
         :type="header.type"
         :placeholder="errMessage"
-        :value="rowData[header.name]"
+        :value="rowData[header.id]"
         @input="change"
       />
     </div>
@@ -19,8 +19,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
-import { TableHeader, Row } from "../stores/counter";
+import { onMounted, ref } from "vue";
+import { Row, TableHeader } from "../stores/counter";
 
 interface Props {
   rowData: Row;
@@ -37,13 +37,11 @@ function click(): void {
 }
 function change(e: Event): void {
   const value = (e.target as HTMLInputElement).value;
-  if (header.nullable || value) {
-    emit("rowchange", value, header.name, rowData.id);
-    errMessage.value = "";
-  } else {
-    emit("rowchange", value, header.name, rowData.id);
-    errMessage.value = "Field is required";
-  }
+
+  emit("rowchange", value, header.id, rowData.id);
+  header.nullable || value
+    ? (errMessage.value = "")
+    : (errMessage.value = "Field is required");
 }
 
 onMounted(() => {
@@ -54,3 +52,4 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped></style>
+../stores

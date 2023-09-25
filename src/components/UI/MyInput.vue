@@ -1,7 +1,7 @@
 <template>
   <input
     v-model="value"
-    class="p-3 focus:border-4 border-solid border-red-500 rounded-md"
+    class="p-3 focus:border-4 border-solid border-red-500 rounded-md text-md"
   />
 </template>
 
