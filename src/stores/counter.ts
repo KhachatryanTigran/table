@@ -2,21 +2,6 @@ import { defineStore } from "pinia";
 import { v4 as uuid } from "uuid";
 import { ref } from "vue";
 
-interface TableInfo {
-  name: string;
-  id: string;
-  tbData: TableHeader[];
-  rowsData: Row[];
-}
-
-type TbName = "user1" | "user2" | "user3";
-
-// const x: Record<TbName, TableInfo> = {
-//   user1: { name: "user1" },
-//   user2: { name: "user2" },
-//   user3: { name: "user3" },
-// };
-
 export interface Row {
   id: string;
   [key: string]: string | number;
